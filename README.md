@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595066253-ferry_logo_meitu_1.png">
+  <img src="https://www.fdevops.com/wp-content/uploads/2020/09/1599039924-ferry_log.png">
 </p>
 
 
@@ -119,6 +119,9 @@ QQ群：1127401830
 * *悟 3元
 * Super_z 10元
 * T*i 10元
+* *伟 10元
+* 老白@天智 20元
+* 劉鑫 30元
 
 支付宝：
 
@@ -129,12 +132,28 @@ QQ群：1127401830
 其他：
 
 * everstar_l 10元
+* 五色花 20元
 
+## 鸣谢
+
+特别感谢 [JetBrains](https://www.jetbrains.com/?from=ferry) 为本开源项目提供免费的 [IntelliJ GoLand](https://www.jetbrains.com/go/?from=ferry) 授权
+
+<p>
+ <a href="https://www.jetbrains.com/?from=ferry">
+   <img height="200" src="https://www.fdevops.com/wp-content/uploads/2020/09/1599213857-jetbrains-variant-4.png">
+ </a>
+</p>
 
 ## License
 
 开源不易，请尊重作者的付出，感谢。
 
-[MIT](https://github.com/lanyulei/ferry/blob/master/LICENSE)
+在此处声明，本系统目前不建议商业产品使用，因本系统使用的`流程设计器`未设置开源协议，`表单设计器`是LGPL v3的协议。
+
+因此避免纠纷，不建议商业产品使用，若执意使用，请联系原作者获得授权。
+
+再次声明，若是未联系作者直接将本系统使用于商业产品，出现的商业纠纷，本系统概不承担，感谢。
+
+[LGPL-3.0](https://github.com/lanyulei/ferry/blob/master/LICENSE)
 
 Copyright (c) 2020 lanyulei

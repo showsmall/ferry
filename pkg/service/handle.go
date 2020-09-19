@@ -325,6 +325,7 @@ func (h *Handle) HandleWorkOrder(
 	circulationValue string,
 	flowProperties int,
 	remarks string,
+	tpls []map[string]interface{},
 ) (err error) {
 	h.workOrderId = workOrderId
 	h.flowProperties = flowProperties
@@ -626,6 +627,51 @@ func (h *Handle) HandleWorkOrder(
 		}
 	}
 
+	// 更新表单数据
+	for _, t := range tpls {
+		var (
+			tplValue []byte
+		)
+		tplValue, err = json.Marshal(t["tplValue"])
+		if err != nil {
+			h.tx.Rollback()
+			return
+		}
+
+		// 是否可写，只有可写的模版可以更新数据
+		updateStatus := false
+		if writeTplList, writeOK := h.stateValue["writeTpls"]; writeOK {
+		tplListTag:
+			for _, writeTplId := range writeTplList.([]interface{}) {
+				if writeTplId == t["tplId"] { // 可写
+					// 是否隐藏，隐藏的模版无法修改数据
+					if hideTplList, hideOK := h.stateValue["hideTpls"]; hideOK {
+						for _, hideTplId := range hideTplList.([]interface{}) {
+							if hideTplId == t["tplId"] { // 隐藏的
+								updateStatus = false
+								break tplListTag
+							} else {
+								updateStatus = true
+							}
+						}
+					} else {
+						updateStatus = true
+					}
+				}
+			}
+		} else {
+			// 不可写
+			updateStatus = false
+		}
+		if updateStatus {
+			err = h.tx.Model(&process.TplData{}).Where("id = ?", t["tplDataId"]).Update("form_data", tplValue).Error
+			if err != nil {
+				h.tx.Rollback()
+				return
+			}
+		}
+	}
+
 	// 流转历史写入
 	err = orm.Eloquent.Model(&cirHistoryValue).
 		Where("work_order = ?", workOrderId).
@@ -663,7 +709,6 @@ func (h *Handle) HandleWorkOrder(
 		CostDuration: costDurationValue,
 		Remarks:      remarks,
 	}
-
 	err = h.tx.Create(&cirHistoryData).Error
 	if err != nil {
 		h.tx.Rollback()

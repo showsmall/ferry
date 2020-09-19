@@ -297,12 +297,13 @@ func ProcessWorkOrder(c *gin.Context) {
 		handle        service.Handle
 		params        struct {
 			Tasks          []string
-			TargetState    string `json:"target_state"`    // 目标状态
-			SourceState    string `json:"source_state"`    // 源状态
-			WorkOrderId    int    `json:"work_order_id"`   // 工单ID
-			Circulation    string `json:"circulation"`     // 流转ID
-			FlowProperties int    `json:"flow_properties"` // 流转类型 0 拒绝，1 同意，2 其他
-			Remarks        string `json:"remarks"`         // 处理的备注信息
+			TargetState    string                   `json:"target_state"`    // 目标状态
+			SourceState    string                   `json:"source_state"`    // 源状态
+			WorkOrderId    int                      `json:"work_order_id"`   // 工单ID
+			Circulation    string                   `json:"circulation"`     // 流转ID
+			FlowProperties int                      `json:"flow_properties"` // 流转类型 0 拒绝，1 同意，2 其他
+			Remarks        string                   `json:"remarks"`         // 处理的备注信息
+			Tpls           []map[string]interface{} `json:"tpls"`            // 表单数据
 		}
 	)
 
@@ -332,6 +333,7 @@ func ProcessWorkOrder(c *gin.Context) {
 		params.Circulation,    // 流转标题
 		params.FlowProperties, // 流转属性
 		params.Remarks,        // 备注信息
+		params.Tpls,           // 工单数据更新
 	)
 	if err != nil {
 		app.Error(c, -1, nil, fmt.Sprintf("处理工单失败，%v", err.Error()))
@@ -582,4 +584,43 @@ func UrgeWorkOrder(c *gin.Context) {
 	}
 
 	app.OK(c, "", "")
+}
+
+// 主动处理
+func ActiveOrder(c *gin.Context) {
+	var (
+		workOrderId string
+		err         error
+		stateValue  []struct {
+			ID            string `json:"id"`
+			Label         string `json:"label"`
+			ProcessMethod string `json:"process_method"`
+			Processor     []int  `json:"processor"`
+		}
+		stateValueByte []byte
+	)
+
+	workOrderId = c.Param("id")
+
+	err = c.ShouldBind(&stateValue)
+	if err != nil {
+		app.Error(c, -1, err, "")
+		return
+	}
+
+	stateValueByte, err = json.Marshal(stateValue)
+	if err != nil {
+		app.Error(c, -1, fmt.Errorf("转byte失败，%v", err.Error()), "")
+		return
+	}
+
+	err = orm.Eloquent.Model(&process.WorkOrderInfo{}).
+		Where("id = ?", workOrderId).
+		Update("state", stateValueByte).Error
+	if err != nil {
+		app.Error(c, -1, fmt.Errorf("接单失败，%v", err.Error()), "")
+		return
+	}
+
+	app.OK(c, "", "接单成功，请及时处理")
 }
