@@ -31,9 +31,19 @@
 
 演示demo: [http://fdevops.com:8001/#/dashboard](http://fdevops.com:8001/#/dashboard)
 
-账号密码：admin/123456
+```
+账号：admin
+密码：123456
+
+演示demo登陆需要取消ldap验证，就是登陆页面取消ldap的打勾。
+```
 
 文档: [https://www.fdevops.com/docs/ferry](https://www.fdevops.com/docs/ferry-tutorial-document/introduction)
+
+视频教程（由群内好友<稳定>提供，非常感谢。）：
+
+* ferry工单系统需要的软件准备 https://www.bilibili.com/video/BV1sA411s7jE
+* ferry源代码下载后第一次运行 https://www.bilibili.com/video/BV1oy4y1v7LR
 
 官网：[http://ferry.fdevops.com](http://ferry.fdevops.com)
 
@@ -88,7 +98,7 @@ QQ群：1127401830
 [兰玉磊的技术博客](https://www.fdevops.com/)
 
 ## 特别感谢
-[go-amdin # 不错的后台开发框架](https://github.com/wenjianzhang/go-admin.git)
+[go-amdin # 不错的后台开发框架](https://github.com/go-admin-team/go-admin)
 
 [vue-element-admin # 不错的前端模版框架](https://github.com/PanJiaChen/vue-element-admin)
 
@@ -105,34 +115,6 @@ QQ群：1127401830
 > 如果您觉得这个项目帮助到了您，您可以请作者喝一杯咖啡表示鼓励:
 
 <img class="no-margin" src="https://www.fdevops.com/wp-content/uploads/2020/07/1595075890-81595075871_.pic_hd.png"  height="200px" >
-
-------------------------------
-
-感谢各位的打赏，你的支持，我的动力。所有打赏将作为项目维护成本。
-
-微信：
-
-* 王*   1元
-* p*i  1元
-* LJ   10元
-* 吻住，我们能赢   10.24元
-* *悟 3元
-* Super_z 10元
-* T*i 10元
-* *伟 10元
-* 老白@天智 20元
-* 劉鑫 30元
-
-支付宝：
-
-* **英     10元
-* *城       5元
-* **华      1元
-
-其他：
-
-* everstar_l 10元
-* 五色花 20元
 
 ## 鸣谢
 
